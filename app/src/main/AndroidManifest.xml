@@ -13,6 +13,21 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

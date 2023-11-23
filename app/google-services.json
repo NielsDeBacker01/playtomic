@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "42074071637",
+    "project_id": "paddel-9600e",
+    "storage_bucket": "paddel-9600e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42074071637:android:9262da5f88bb0699b42adc",
+        "android_client_info": {
+          "package_name": "ap.edu.play2mic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuzFy4bF-JbJinC0m19vuUxueR8X82ujo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
