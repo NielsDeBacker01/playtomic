@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         }
         else
         {
-            // User is signed in, redirect to HomeActivity
+            // User is signed in, redirect to HomeActivity.kt
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish() // Close the current activity

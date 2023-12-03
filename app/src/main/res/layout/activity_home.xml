@@ -15,29 +15,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Profile"
+            android:enabled="true"
             tools:layout_editor_absoluteX="-16dp"
             tools:layout_editor_absoluteY="16dp" />
-    </LinearLayout>
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!-- The main content view -->
-        <FrameLayout
-            android:id="@+id/main_content"
+        <Button
+            android:id="@+id/profile_button2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:text="Profile 2"/>
 
-        <!-- The navigation drawer -->
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:menu="@menu/nav_menu" />
-
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
