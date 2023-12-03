@@ -22,8 +22,13 @@ class HomeActivity : AppCompatActivity() {
 
         val profileButton = findViewById<Button>(R.id.profile_button)
         profileButton.setOnClickListener {
-            Log.w(TAG, "Profilebutton:pressed")
             val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        val locationsButton = findViewById<Button>(R.id.locations)
+        locationsButton.setOnClickListener {
+            val intent = Intent(this, LocationsActivity::class.java)
             startActivity(intent)
         }
     }

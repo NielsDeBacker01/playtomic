@@ -24,6 +24,11 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.MyApplication" />
         <activity
+            android:name=".LocationsActivity"
+            android:exported="false"
+            android:label="LocationsActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
             android:name=".SignInActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication" />

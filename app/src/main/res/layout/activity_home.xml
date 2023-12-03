@@ -20,10 +20,10 @@
             tools:layout_editor_absoluteY="16dp" />
 
         <Button
-            android:id="@+id/profile_button2"
+            android:id="@+id/locations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile 2"/>
+            android:text="find a field"/>
 
     </LinearLayout>
 
