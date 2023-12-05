@@ -12,10 +12,12 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/profile_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="" />
+            android:id="@+id/profileImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/default_pfp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
 
         <TextView
             android:id="@+id/email"
