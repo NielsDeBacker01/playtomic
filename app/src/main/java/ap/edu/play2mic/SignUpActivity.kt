@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SignUpActivity : AppCompatActivity() {
@@ -32,6 +33,18 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign up success
                         val user = auth.currentUser
+
+                        val db = Firebase.firestore
+                        val userRef = db.collection("users").document(user?.uid.toString())
+                        val userUpdates = hashMapOf(
+                            "skillLevel" to "1.0",
+                            "handedness" to "Either",
+                            "position" to "Either",
+                            "matchType" to "Either",
+                            "playTime" to "No preference"
+                        )
+                        userRef.set(userUpdates)
+
                         updateUI(user)
                     } else {
                         // Sign up fails
