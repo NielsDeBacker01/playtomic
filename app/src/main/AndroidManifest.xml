@@ -15,15 +15,17 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".LocationsActivity"
             android:exported="false"
-            android:label="@string/title_activity_home"
+            android:label="LocationsActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".ListItemDetailedActivity"
+            android:exported="false"
+            android:label="ListItemDetailedActivity"
             android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".SignInActivity"
@@ -32,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="MainActivity"
             android:theme="@style/Theme.MyApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
