@@ -8,14 +8,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/hello"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hello" />
+            android:queryHint="Search by name" />
 
-        <ListView
-            android:id="@+id/list_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -1,29 +1,35 @@
 package ap.edu.play2mic
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 
-class ProfileActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class ProfileFragment : Fragment(R.layout.fragment_second) {
 
-        setContentView(R.layout.activity_profile)
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_second, container, false)
         auth = com.google.firebase.ktx.Firebase.auth
-        val signOutButton = findViewById<Button>(R.id.sign_out_button)
+        val signOutButton = view.findViewById<Button>(R.id.sign_out_button)
         signOutButton.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(getActivity(), SignInActivity::class.java)
             startActivity(intent)
-            finish() // Close the current activity
+            activity?.finish() // Close the current activity
         }
 
         val user = Firebase.auth.currentUser
@@ -38,9 +44,12 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         if (user != null) {
-            val emailTextView = findViewById<TextView>(R.id.email)
+            val emailTextView = view.findViewById<TextView>(R.id.email)
 
             emailTextView.text = user.email
         }
+
+        return view
     }
+
 }
