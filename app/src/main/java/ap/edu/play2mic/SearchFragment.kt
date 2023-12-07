@@ -21,12 +21,6 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
 
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
-        val profileButton = view.findViewById<Button>(R.id.profile_button)
-        profileButton.setOnClickListener {
-            val intent = Intent(activity, ProfileFragment::class.java)
-            startActivity(intent)
-        }
-
         val locationsButton = view.findViewById<Button>(R.id.locations)
         locationsButton.setOnClickListener {
             val intent = Intent(activity, LocationsActivity::class.java)

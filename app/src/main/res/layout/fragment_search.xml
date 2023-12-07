@@ -11,15 +11,6 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/profile_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Profile"
-            android:enabled="true"
-            tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <Button
             android:id="@+id/locations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
