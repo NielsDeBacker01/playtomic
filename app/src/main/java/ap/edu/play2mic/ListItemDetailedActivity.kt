@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,8 @@ class ListItemDetailedActivity : AppCompatActivity() {
     private lateinit var spinner: Spinner
     private var selectedHour: String? = null
     private var selectedDate: String? = null
+    private var playType: String? = null
+    private var allowedGenders: String? = null
     val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -86,6 +89,30 @@ class ListItemDetailedActivity : AppCompatActivity() {
                 // Do nothing here
             }
         }
+
+        playType = "Competitive"
+        findViewById<RadioButton>(R.id.radio_competitive).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Competitive"
+        }
+        findViewById<RadioButton>(R.id.radio_friendly).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Friendly"
+        }
+
+        allowedGenders = "Mixed"
+        findViewById<RadioButton>(R.id.radio_all).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "All"
+        }
+        findViewById<RadioButton>(R.id.radio_mixed).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Mixed"
+        }
+        findViewById<RadioButton>(R.id.radio_men).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Men only"
+        }
+
+        val btnMatchMaker: Button = findViewById(R.id.btnMatchMaker)
+        btnMatchMaker.setOnClickListener {
+            createMatches()
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -130,5 +157,9 @@ class ListItemDetailedActivity : AppCompatActivity() {
             e.printStackTrace()
             null
         }
+    }
+
+    private fun createMatches() {
+        Log.d("test", "Selected Date: $selectedDate $selectedHour, Type: $playType, Gender: $allowedGenders")
     }
 }

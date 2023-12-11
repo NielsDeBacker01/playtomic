@@ -2,7 +2,6 @@ package ap.edu.play2mic
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 
-class ProfileFragment : Fragment(R.layout.fragment_second) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var auth: FirebaseAuth
 
@@ -22,7 +21,7 @@ class ProfileFragment : Fragment(R.layout.fragment_second) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_second, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         auth = com.google.firebase.ktx.Firebase.auth
         val signOutButton = view.findViewById<Button>(R.id.sign_out_button)
         signOutButton.setOnClickListener {
