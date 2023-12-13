@@ -1,7 +1,6 @@
 package ap.edu.play2mic
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
@@ -11,6 +10,11 @@ import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.firestore
+import com.google.firebase.auth.auth
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -23,16 +27,20 @@ class ListItemDetailedActivity : AppCompatActivity() {
     private var selectedHour: String? = null
     private var selectedDate: String? = null
     private var playType: String? = null
+    private var level: String? = null
     private var allowedGenders: String? = null
     val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val db = Firebase.firestore
+    val currentUser = Firebase.auth.currentUser
+    val timeOptions =  mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_item_detailed)
 
         val extras = intent.extras
-        val timeOptions =  mutableListOf<String>()
 
+        //load item specific data in
         if (extras != null) {
             val name = extras.getString("Name")
             val price = extras.getString("Price") + "€/uur"
@@ -68,50 +76,22 @@ class ListItemDetailedActivity : AppCompatActivity() {
             }
         }
 
-        val btnDatePicker: Button = findViewById(R.id.btnDatePicker)
-        spinner = findViewById(R.id.spinnerOptions)
-        tvSelectedDate = findViewById(R.id.tvSelectedDate)
-
-        btnDatePicker.setOnClickListener {
-            showDatePickerDialog()
-        }
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timeOptions)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: android.view.View?, position: Int, id: Long) {
-                selectedHour = timeOptions[position]
-                tvSelectedDate.text = "Selected Date: $selectedDate $selectedHour"
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) {
-                // Do nothing here
-            }
-        }
-
-        playType = "Competitive"
-        findViewById<RadioButton>(R.id.radio_competitive).setOnCheckedChangeListener { buttonView, isChecked ->
-            playType = "Competitive"
-        }
-        findViewById<RadioButton>(R.id.radio_friendly).setOnCheckedChangeListener { buttonView, isChecked ->
-            playType = "Friendly"
-        }
-
-        allowedGenders = "Mixed"
-        findViewById<RadioButton>(R.id.radio_all).setOnCheckedChangeListener { buttonView, isChecked ->
-            playType = "All"
-        }
-        findViewById<RadioButton>(R.id.radio_mixed).setOnCheckedChangeListener { buttonView, isChecked ->
-            playType = "Mixed"
-        }
-        findViewById<RadioButton>(R.id.radio_men).setOnCheckedChangeListener { buttonView, isChecked ->
-            playType = "Men only"
-        }
-
+        //setup ui
+        setupUiElements()
         val btnMatchMaker: Button = findViewById(R.id.btnMatchMaker)
         btnMatchMaker.setOnClickListener {
             createMatches()
+        }
+
+        //get user values for creation
+        val collectionRef = db.collection("users")
+        collectionRef.whereEqualTo("__name__", currentUser!!.uid).get().addOnSuccessListener { querySnapshot ->
+            for (document in querySnapshot) {
+                level = document.get("skillLevel") as? String
+                Log.d(TAG, "${document.id} => ${document.data}")
+            }
+        }.addOnFailureListener { exception ->
+            Log.w(TAG, "Error getting documents.", exception)
         }
     }
 
@@ -159,7 +139,77 @@ class ListItemDetailedActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupUiElements()
+    {
+        val btnDatePicker: Button = findViewById(R.id.btnDatePicker)
+        spinner = findViewById(R.id.spinnerOptions)
+        tvSelectedDate = findViewById(R.id.tvSelectedDate)
+
+        btnDatePicker.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, timeOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: android.view.View?, position: Int, id: Long) {
+                selectedHour = timeOptions[position]
+                tvSelectedDate.text = "Selected Date: $selectedDate $selectedHour"
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                // Do nothing here
+            }
+        }
+
+        playType = "Competitive"
+        findViewById<RadioButton>(R.id.radio_competitive).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Competitive"
+        }
+        findViewById<RadioButton>(R.id.radio_friendly).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Friendly"
+        }
+
+        allowedGenders = "Mixed"
+        findViewById<RadioButton>(R.id.radio_all).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "All"
+        }
+        findViewById<RadioButton>(R.id.radio_mixed).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Mixed"
+        }
+        findViewById<RadioButton>(R.id.radio_men).setOnCheckedChangeListener { buttonView, isChecked ->
+            playType = "Men only"
+        }
+    }
+
     private fun createMatches() {
-        Log.d("test", "Selected Date: $selectedDate $selectedHour, Type: $playType, Gender: $allowedGenders")
+        val currentUser = Firebase.auth.currentUser
+
+        data class User(
+            val allowedGenders: String?,
+            val level: String?,
+            //val location: ref,
+            val playType: String?,
+            //val players
+            val time: Timestamp
+        )
+
+        //set time
+        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val date = formatter.parse("$selectedDate $selectedHour:00")
+        val timestamp = Timestamp(date.time);
+
+        val user = User(allowedGenders, level, playType, timestamp)
+
+        db.collection("junk")
+            .add(user)
+            .addOnSuccessListener { documentReference: DocumentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e: Exception ->
+                Log.w(TAG, "Error adding document", e)
+            }
+        Log.d(TAG, "$selectedDate $selectedHour:00")
     }
 }
