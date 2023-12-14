@@ -14,6 +14,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.firestore
 import com.google.firebase.auth.auth
+import org.w3c.dom.Document
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -29,6 +30,7 @@ class ListItemDetailedActivity : AppCompatActivity() {
     private var playType: String? = null
     private var level: String? = null
     private var allowedGenders: String? = null
+    private var fieldId: String? = null
     val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val db = Firebase.firestore
     val currentUser = Firebase.auth.currentUser
@@ -42,6 +44,7 @@ class ListItemDetailedActivity : AppCompatActivity() {
 
         //load item specific data in
         if (extras != null) {
+            fieldId = extras.getString("Id")
             val name = extras.getString("Name")
             val price = extras.getString("Price") + "€/uur"
             val streetname = extras.getString("Streetname") + " (" + extras.getString("City") + ")"
@@ -189,9 +192,9 @@ class ListItemDetailedActivity : AppCompatActivity() {
         data class User(
             val allowedGenders: String?,
             val level: String?,
-            //val location: ref,
+            val location: DocumentReference,
             val playType: String?,
-            //val players
+            val players: List<DocumentReference>,
             val time: Timestamp
         )
 
@@ -200,9 +203,17 @@ class ListItemDetailedActivity : AppCompatActivity() {
         val date = formatter.parse("$selectedDate $selectedHour:00")
         val timestamp = Timestamp(date.time);
 
-        val user = User(allowedGenders, level, playType, timestamp)
+        //get locationref
+        val location = db.collection("locations").document(fieldId!!)
 
-        db.collection("junk")
+        //get playerrefs
+        val userRef = db.collection("users").document(currentUser!!.uid)
+        val players = listOf<DocumentReference>(userRef!!)
+
+        val user = User(allowedGenders, level, location, playType, players, timestamp)
+        Log.d(TAG, "DocumentSnapshot added with Data: $user")
+
+        db.collection("matches")
             .add(user)
             .addOnSuccessListener { documentReference: DocumentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
@@ -210,6 +221,6 @@ class ListItemDetailedActivity : AppCompatActivity() {
             .addOnFailureListener { e: Exception ->
                 Log.w(TAG, "Error adding document", e)
             }
-        Log.d(TAG, "$selectedDate $selectedHour:00")
+        finish()
     }
 }

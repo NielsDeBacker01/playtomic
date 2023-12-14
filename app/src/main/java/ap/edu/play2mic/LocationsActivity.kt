@@ -48,7 +48,9 @@ class LocationsActivity : AppCompatActivity() {
 
         locations.get().addOnSuccessListener { result ->
             for (document in result) {
-                locationList.add(document.data)
+                val element = document.data
+                element.put("Uid", document.id)
+                locationList.add(element)
             }
             Log.d(TAG, "$locationList")
             filteredList.addAll(locationList)
@@ -92,6 +94,7 @@ class ListAdapter(context: Context, dataArrayList: ArrayList<Map<String, Any>>) 
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, ListItemDetailedActivity::class.java)
             var bundle = Bundle()
+            bundle.putString("Id", listData["Uid"].toString())
             bundle.putString("Name", listData["Name"].toString())
             bundle.putString("City", listData["City"].toString())
             bundle.putString("Streetname", listData["Streetname"].toString())
