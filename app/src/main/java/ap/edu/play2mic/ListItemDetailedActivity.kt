@@ -189,7 +189,7 @@ class ListItemDetailedActivity : AppCompatActivity() {
     private fun createMatches() {
         val currentUser = Firebase.auth.currentUser
 
-        data class User(
+        data class Match(
             val allowedGenders: String?,
             val level: String?,
             val location: DocumentReference,
@@ -210,11 +210,11 @@ class ListItemDetailedActivity : AppCompatActivity() {
         val userRef = db.collection("users").document(currentUser!!.uid)
         val players = listOf<DocumentReference>(userRef!!)
 
-        val user = User(allowedGenders, level, location, playType, players, timestamp)
-        Log.d(TAG, "DocumentSnapshot added with Data: $user")
+        val match = Match(allowedGenders, level, location, playType, players, timestamp)
+        Log.d(TAG, "DocumentSnapshot added with Data: $match")
 
         db.collection("matches")
-            .add(user)
+            .add(match)
             .addOnSuccessListener { documentReference: DocumentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
             }
