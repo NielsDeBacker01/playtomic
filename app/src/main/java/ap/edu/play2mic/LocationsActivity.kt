@@ -12,6 +12,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -62,6 +63,20 @@ class LocationsActivity : AppCompatActivity() {
     }
 
     private fun filter(text: String?) {
+        filteredList.clear()
+        if (text == null || text.isEmpty()) {
+            filteredList.addAll(locationList)
+        } else {
+            for (item in locationList) {
+                if (item["Name"].toString().contains(text, ignoreCase = true)) {
+                    filteredList.add(item)
+                }
+            }
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    private fun filter2(text: String?) {
         filteredList.clear()
         if (text == null || text.isEmpty()) {
             filteredList.addAll(locationList)
