@@ -15,25 +15,24 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.storage
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.storage
 
-class ProfileFragment : Fragment(R.layout.fragment_second) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var profileImageView: ImageView
@@ -44,7 +43,7 @@ class ProfileFragment : Fragment(R.layout.fragment_second) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_second, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         auth = com.google.firebase.ktx.Firebase.auth
         val signOutButton = view.findViewById<Button>(R.id.sign_out_button)
         signOutButton.setOnClickListener {
