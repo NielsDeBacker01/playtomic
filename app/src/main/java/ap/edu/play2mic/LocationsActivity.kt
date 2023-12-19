@@ -12,6 +12,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,7 +49,9 @@ class LocationsActivity : AppCompatActivity() {
 
         locations.get().addOnSuccessListener { result ->
             for (document in result) {
-                locationList.add(document.data)
+                val element = document.data
+                element.put("Uid", document.id)
+                locationList.add(element)
             }
             Log.d(TAG, "$locationList")
             filteredList.addAll(locationList)
@@ -60,6 +63,20 @@ class LocationsActivity : AppCompatActivity() {
     }
 
     private fun filter(text: String?) {
+        filteredList.clear()
+        if (text == null || text.isEmpty()) {
+            filteredList.addAll(locationList)
+        } else {
+            for (item in locationList) {
+                if (item["Name"].toString().contains(text, ignoreCase = true)) {
+                    filteredList.add(item)
+                }
+            }
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    private fun filter2(text: String?) {
         filteredList.clear()
         if (text == null || text.isEmpty()) {
             filteredList.addAll(locationList)
@@ -92,6 +109,7 @@ class ListAdapter(context: Context, dataArrayList: ArrayList<Map<String, Any>>) 
         holder.itemView.setOnClickListener {
             val intent = Intent(mContext, ListItemDetailedActivity::class.java)
             var bundle = Bundle()
+            bundle.putString("Id", listData["Uid"].toString())
             bundle.putString("Name", listData["Name"].toString())
             bundle.putString("City", listData["City"].toString())
             bundle.putString("Streetname", listData["Streetname"].toString())
