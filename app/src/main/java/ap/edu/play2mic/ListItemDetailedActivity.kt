@@ -215,13 +215,13 @@ class ListItemDetailedActivity : AppCompatActivity() {
         radioGroupGenders.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radio_all -> {
-                    playType = "All"
+                    allowedGenders = "All"
                 }
                 R.id.radio_mixed -> {
-                    playType = "Mixed"
+                    allowedGenders = "Mixed"
                 }
                 R.id.radio_men -> {
-                    playType = "Men only"
+                    allowedGenders = "Men only"
                 }
             }
         }
