@@ -32,7 +32,7 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 
-class ProfileFragment : Fragment(R.layout.fragment_second) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var profileImageView: ImageView
@@ -43,7 +43,7 @@ class ProfileFragment : Fragment(R.layout.fragment_second) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_second, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         auth = com.google.firebase.ktx.Firebase.auth
         val signOutButton = view.findViewById<Button>(R.id.sign_out_button)
         signOutButton.setOnClickListener {
@@ -100,14 +100,14 @@ class ProfileFragment : Fragment(R.layout.fragment_second) {
 
             if (user != null) {
                 val handednessSpinner = view.findViewById<Spinner>(R.id.handedness)
-                val handednessOptions = arrayOf("Left", "Right", "Either")
+                val handednessOptions = arrayOf("Left hand", "Right hand", "Either")
                 val handednessAdapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, handednessOptions)
                 handednessAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 handednessSpinner.adapter = handednessAdapter
 
                 val positionSpinner = view.findViewById<Spinner>(R.id.position)
-                val positionOptions = arrayOf("Front", "Back", "Either")
+                val positionOptions = arrayOf("Left", "Right", "Either")
                 val positionAdapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, positionOptions)
                 positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -154,8 +154,8 @@ class ProfileFragment : Fragment(R.layout.fragment_second) {
         val emailTextView = view.findViewById<TextView>(R.id.email)
         profileImageView = view.findViewById(R.id.profileImageView)
 
-        val skillLevelEditText = view.findViewById<EditText>(R.id.skillLevel)
-        skillLevelEditText.setText(skillLevel, TextView.BufferType.EDITABLE)
+        val skillLevelTextView = view.findViewById<TextView>(R.id.skillLevel)
+        skillLevelTextView.setText("Level: "+skillLevel)
 
         val handednessSpinner = view.findViewById<Spinner>(R.id.handedness)
         val positionSpinner = view.findViewById<Spinner>(R.id.position)

@@ -6,6 +6,16 @@
         android:icon="@drawable/ic_search"/>
 
     <item
+        android:id="@+id/allMatchesFragment"
+        android:title="matches"
+        android:icon="@drawable/ic_group"/>
+
+    <item
+        android:id="@+id/myMatchesFragment"
+        android:title="my matches"
+        android:icon="@drawable/ic_how_to_reg"/>
+
+    <item
         android:id="@+id/secondFragment"
         android:title="profile"
         android:icon="@drawable/ic_person_outline"/>

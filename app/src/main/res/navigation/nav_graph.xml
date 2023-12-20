@@ -12,13 +12,35 @@
         tools:layout="@layout/fragment_search">
 
         <action
-            android:id="@+id/action_firstFragment_to_secondFragment"
+            android:id="@+id/action_firstFragment_to_allMatchesFragment"
+            app:destination="@id/allMatchesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/allMatchesFragment"
+        android:name="ap.edu.play2mic.AllMatchesFragment"
+        android:label="Matches Fragment"
+        tools:layout="@layout/fragment_all_matches">
+
+        <action
+            android:id="@+id/action_allMatchesFragment_to_myMatchesFragment"
+            app:destination="@id/myMatchesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myMatchesFragment"
+        android:name="ap.edu.play2mic.MyMatchesFragment"
+        android:label="My Matches Fragment"
+        tools:layout="@layout/fragment_my_matches" >
+
+        <action
+            android:id="@+id/action_myMatchesFragment_to_secondFragment"
             app:destination="@id/secondFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
         android:name="ap.edu.play2mic.ProfileFragment"
-        android:label="Second Fragment"
-        tools:layout="@layout/fragment_second" />
+        android:label="Profile Fragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

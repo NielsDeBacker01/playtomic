@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -74,7 +72,7 @@ class LocationsActivity : AppCompatActivity() {
     }
 }
 
-class ListAdapter(context: Context, dataArrayList: ArrayList<Map<String, Any>>) :
+class ListAdapter(context: Context, dataArrayList: MutableList<Map<String, Any>>) :
     RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private val mContext = context
