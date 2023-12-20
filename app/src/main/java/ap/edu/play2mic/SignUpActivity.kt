@@ -41,7 +41,8 @@ class SignUpActivity : AppCompatActivity() {
                             "handedness" to "Either",
                             "position" to "Either",
                             "matchType" to "Either",
-                            "playTime" to "No preference"
+                            "playTime" to "No preference",
+                            "email" to email
                         )
                         userRef.set(userUpdates)
 

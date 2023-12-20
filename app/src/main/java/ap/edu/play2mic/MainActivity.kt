@@ -15,27 +15,25 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Check if the user is already signed in
         val currentUser = Firebase.auth.currentUser
         if (currentUser == null) {
-            // User is not signed in, redirect to SignInActivity
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
-            finish() // Close the current activity
         }
-        else //continue
+        else
         {
             val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             val navController = navHostFragment.navController
             bottomNavigationView.setupWithNavController(navController)
 
-            // Navigate to the SearchFragment when the activity is created
             navController.navigate(R.id.firstFragment)
 
             bottomNavigationView.setOnNavigationItemSelectedListener {
                 when(it.itemId){
                     R.id.firstFragment -> setCurrentFragment(SearchFragment())
+                    R.id.allMatchesFragment -> setCurrentFragment(AllMatchesFragment())
+                    R.id.myMatchesFragment -> setCurrentFragment(MyMatchesFragment())
                     R.id.secondFragment -> setCurrentFragment(ProfileFragment())
                 }
                 true
