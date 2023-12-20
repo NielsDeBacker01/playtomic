@@ -94,6 +94,7 @@ class MyMatchActivity : ComponentActivity() {
                     val leaveMatchButton = findViewById<Button>(R.id.leaveMatchButton)
                     leaveMatchButton.setOnClickListener {
                         handleLeaveMatch(matchId, players)
+                        finish()
                     }
                 }
             }

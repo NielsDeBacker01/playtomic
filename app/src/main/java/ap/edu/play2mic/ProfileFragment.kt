@@ -71,14 +71,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
                 val saveButton = view.findViewById<Button>(R.id.saveButton)
                 saveButton.setOnClickListener {
-                    val skillLevel = view.findViewById<EditText>(R.id.skillLevel).text.toString()
                     val handedness = view.findViewById<Spinner>(R.id.handedness).selectedItem.toString()
                     val position = view.findViewById<Spinner>(R.id.position).selectedItem.toString()
                     val matchType = view.findViewById<Spinner>(R.id.match_type).selectedItem.toString()
                     val playTime = view.findViewById<Spinner>(R.id.time).selectedItem.toString()
 
                     val userUpdates = hashMapOf(
-                        "skillLevel" to skillLevel,
                         "handedness" to handedness,
                         "position" to position,
                         "matchType" to matchType,

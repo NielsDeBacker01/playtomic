@@ -113,7 +113,7 @@ class MyMatchesFragment : Fragment(R.layout.fragment_my_matches) {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val listData = mDataArrayList[position]
             holder.level.text = listData["level"].toString()
-            holder.matchType.text = listData["matchType"].toString()
+            holder.matchType.text = listData["playType"].toString()
             holder.location.text = listData["location"].toString()
 
 
